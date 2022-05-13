@@ -53,8 +53,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         return;
                       }
                       _formkey.currentState!.save();
-                      _ref.push().set(_taskController.text).then((value) =>
-                          Navigator.push(
+                      _ref.child("saran").push().set(_taskController.text).then(
+                          (value) => Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => const ViewData())));

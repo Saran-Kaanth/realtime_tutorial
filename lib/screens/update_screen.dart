@@ -45,6 +45,7 @@ class _UpdateScreenState extends State<UpdateScreen> {
                     return;
                   }
                   _formkey.currentState!.save();
+
                   String _text = _taskController.text;
                   _ref.child(widget.value).set(_text);
                   Navigator.push(
