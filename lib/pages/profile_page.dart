@@ -10,12 +10,27 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-          child: Text(
-        "Profile Page",
-        style: TextStyle(fontSize: 40),
-      )),
-    );
+    return SafeArea(
+        child: Scaffold(
+            body: SingleChildScrollView(
+                child: Column(children: [
+      Container(
+          color: Colors.grey,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(
+                width: 10,
+                height: 60,
+              ),
+              Text(
+                "Profile Page",
+                style: TextStyle(fontSize: 40),
+              ),
+            ],
+          )),
+      Container()
+    ]))));
   }
 }
