@@ -3,7 +3,9 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:realtime_tutorial/pages/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:realtime_tutorial/pages/login_page.dart';
 import 'package:realtime_tutorial/pages/main_page.dart';
+import 'package:realtime_tutorial/pages/splash_page.dart';
 import 'package:realtime_tutorial/screens/home_screen.dart';
 import 'pages/home_page.dart';
 
@@ -20,7 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const MainPage(),
+      home: const SplashPage(),
       theme: ThemeData(primarySwatch: Colors.blue),
     );
   }

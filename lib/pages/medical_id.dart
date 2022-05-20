@@ -1,20 +1,23 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:realtime_tutorial/pages/home_page.dart';
 import 'package:intl/intl.dart';
+import 'package:realtime_tutorial/pages/medical_edit.dart';
 
 class MedicalIDCard extends StatefulWidget {
-  // const MedicalIDCard({Key? key}) : super(key: key);
-  final String uid;
+  const MedicalIDCard({Key? key}) : super(key: key);
+  // final String uid;
   // ignore: use_key_in_widget_constructors
-  const MedicalIDCard({required this.uid});
+  // const MedicalIDCard({required this.uid});
 
   @override
   State<MedicalIDCard> createState() => _MedicalIDCardState();
 }
 
 class _MedicalIDCardState extends State<MedicalIDCard> {
+  String uid = FirebaseAuth.instance.currentUser!.uid.toString();
   var medicalData;
   DateFormat dateFormat = DateFormat("yyyy-MM-dd");
   String _name = "";
@@ -30,9 +33,10 @@ class _MedicalIDCardState extends State<MedicalIDCard> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    print(uid);
     final ref = FirebaseDatabase.instance
         .ref("users")
-        .child(widget.uid)
+        .child(uid)
         .child("MedicalId")
         .once()
         .then((value) {
@@ -55,7 +59,7 @@ class _MedicalIDCardState extends State<MedicalIDCard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.black87,
+        backgroundColor: Colors.white,
         appBar: AppBar(
           title: Text("Medical ID Card"),
         ),
@@ -65,7 +69,7 @@ class _MedicalIDCardState extends State<MedicalIDCard> {
           child: Card(
             elevation: 90,
             shadowColor: Colors.green[900],
-            color: Colors.black,
+            color: Colors.black54,
             child: SizedBox(
               width: 400,
               height: 400,
@@ -75,11 +79,12 @@ class _MedicalIDCardState extends State<MedicalIDCard> {
                   children: [
                     CircleAvatar(
                       backgroundColor: Colors.green[900],
-                      radius: 40,
+                      radius: 43,
                       child: CircleAvatar(
-                        // backgroundImage: NetworkImage(
-                        //     "https://pbs.twimg.com/profile_images/1304985167476523008/QNHrwL2q_400x400.jpg"), //NetworkImage
-                        radius: 25,
+                        backgroundImage: NetworkImage(FirebaseAuth
+                            .instance.currentUser!.photoURL
+                            .toString()), //NetworkImage
+                        radius: 40,
                       ), //CircleAvatar
                     ),
                     SizedBox(
@@ -105,7 +110,7 @@ class _MedicalIDCardState extends State<MedicalIDCard> {
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
                                   // fontSize: 30,
-                                  color: Colors.green[900],
+                                  color: Colors.red[700],
                                   fontWeight: FontWeight.w500,
                                 )),
                             SizedBox(
@@ -161,7 +166,10 @@ class _MedicalIDCardState extends State<MedicalIDCard> {
                         // ),
                         RaisedButton(
                           onPressed: () {
-                            Navigator.pop(context);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => MedicalEdit()));
                           },
                           // color: Colors.black,
                           elevation: 50,
