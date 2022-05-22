@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:realtime_tutorial/pages/analytics_page.dart';
+import 'package:realtime_tutorial/pages/food_page.dart';
 import 'package:realtime_tutorial/pages/home_page.dart';
 import 'package:realtime_tutorial/pages/prediction_page.dart';
 import 'package:realtime_tutorial/pages/profile_page.dart';
@@ -16,7 +17,8 @@ class _MainPageState extends State<MainPage> {
 
   List<Widget> _widgetOptions = [
     HomePage(),
-    AnalyticsPage(),
+    // AnalyticsPage(),
+    MyForm(),
     PredictionPage(),
     ProfilePage()
   ];
