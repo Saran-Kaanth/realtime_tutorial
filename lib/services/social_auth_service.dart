@@ -53,6 +53,7 @@ class AuthService {
         if (state) {
           DateFormat dateFormat = DateFormat("yyyy-MM-dd");
           DatabaseReference _ref;
+
           _ref = FirebaseDatabase.instance.ref("users");
 
           _ref.child(user!.uid).child("login_data").set({
@@ -61,7 +62,50 @@ class AuthService {
             "user_email": user.email,
             "user_mobile": user.phoneNumber,
             "verified": user.emailVerified,
+          }).then((value) {
+            print("success");
           });
+
+          _ref.child(user.uid).child("MedicalId").set({
+            "blood_type": "",
+            "dob": "",
+            "emergency_1": "",
+            "emergency_2": "",
+            "height": "",
+            "weight": "",
+            "name": "",
+            "medical_conditions": "",
+            "medication": ""
+          }).then((value) {
+            print("success 2");
+          });
+          List months = [
+            'Jan',
+            'Feb',
+            'Mar',
+            'Apr',
+            'may',
+            'jun',
+            'jul',
+            'aug',
+            'sep',
+            'oct',
+            'nov',
+            'dec'
+          ];
+          _ref
+              .child(user.uid)
+              .child("all_data")
+              .child("avg")
+              .child(months[(DateTime.now().month) - 1])
+              .set({
+            "avgCalories": 0,
+            "avgFat": 0,
+            "avgCholes": 0,
+            "avgGlucose": 80,
+            "avgProtein": 0,
+            "avgCarbs": 0
+          }).then((value) => print("all_success"));
 
           print("hii");
           return 0;

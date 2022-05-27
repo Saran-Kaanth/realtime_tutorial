@@ -4,6 +4,7 @@ import 'package:realtime_tutorial/pages/food_page.dart';
 import 'package:realtime_tutorial/pages/home_page.dart';
 import 'package:realtime_tutorial/pages/prediction_page.dart';
 import 'package:realtime_tutorial/pages/profile_page.dart';
+import 'package:realtime_tutorial/pages/sample_page.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -18,7 +19,8 @@ class _MainPageState extends State<MainPage> {
   List<Widget> _widgetOptions = [
     HomePage(),
     // AnalyticsPage(),
-    MyForm(),
+    AnalyticsPage(),
+    // SamplePage(),
     PredictionPage(),
     ProfilePage()
   ];
