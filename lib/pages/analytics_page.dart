@@ -38,7 +38,9 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
   String carb_2 = "";
 
   String recomMsg = "";
+  Map _avgData = {};
   late Icon com_arrow;
+  Color _textColor = Colors.black;
 
   List months = [
     'Jan',
@@ -61,18 +63,25 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
     super.initState();
     com_arrow = Icon(Icons.arrow_back);
     _ref = FirebaseDatabase.instance.ref("users");
-    items = [
-      "apple",
-      "banana",
-      "grapes",
-      "pineapple",
-      "grapefruit",
-      "orange",
-      "fat free milk",
-      "honey",
-      "sugar water",
-      "raisins"
-    ];
+    items = [];
+
+    recomMsg = "Need Some data for recommendation!";
+    _ref
+        .child(_instance.currentUser!.uid)
+        .child("all_data")
+        .child("avg")
+        .child(months[(DateTime.now().month) - 1])
+        .once()
+        .then((value) {
+      print("hii");
+      if (value.snapshot.value != null) {
+        print(value.snapshot.value);
+
+        _avgData = value.snapshot.value as Map;
+        print("hii");
+        print(_avgData);
+      }
+    });
     final ref = FirebaseDatabase.instance
         .ref("users")
         .child(_instance.currentUser!.uid)
@@ -128,20 +137,24 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
           print(date_1);
           com_arrow = Icon(Icons.arrow_drop_down_sharp);
 
-          if ((firstData["glucoseData"] > secondData["glucoseData"] ||
-                  firstData["glucoseData"] < secondData["glucoseData"]) &&
-              (firstData["glucoseData"] >= 80 &&
-                  firstData["glucoseData"] <= 130)) {
-            print("You're good to go! You can maintain your meal as it is!");
+          if (_avgData["avgGlucose"] > 85 && _avgData["avgGlucose"] < 120) {
+            _textColor = Colors.green;
+            recomMsg =
+                "You're good to go! You can maintain your meal \nas it is!";
             // items = [firstData["foodData"].keys];
-            items = firstData["foodData"].keys.toList();
-          }
-
-          if ((firstData["glucoseData"] > secondData["glucoseData"] ||
-                  firstData["glucoseData"] < secondData["glucoseData"]) &&
-              firstData["glucoseData"] < 80) {
-            print(
-                "Try to take more amount of carbohydrates food to increase your glucose level and try to add this");
+            List newItems = [];
+            newItems = firstData["foodData"].keys.toList();
+            newItems.addAll(secondData["foodData"].keys.toList());
+            for (var item in newItems.toSet()) {
+              if (item != "total_nutrients") {
+                items.add(item);
+              }
+            }
+            print(recomMsg);
+          } else if (_avgData["avgGlucose"] < 85) {
+            _textColor = Color.fromARGB(255, 212, 152, 1);
+            recomMsg =
+                "Try to take more amount of carbohydrates food to \nincrease your glucose level and try to add this";
             items = [
               "apple",
               "banana",
@@ -153,6 +166,27 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
               "honey",
               "sugar water",
               "raisins"
+            ];
+          } else if (_avgData["avgGlucose"] > 120) {
+            _textColor = Color.fromARGB(255, 215, 60, 12);
+            recomMsg =
+                "I think you have to reduce your glucose level a \nlittle bit! Don't worry Try to take these foods!";
+            items = [
+              "Broccoli",
+              "Broccoli Sprouts",
+              "Seafood",
+              "Pumpkin and seeds",
+              "Nuts",
+              "Okra",
+              "Beans",
+              "Berries",
+              "Avocados",
+              "Oats",
+              "Orange",
+              "Lemon",
+              "Apple",
+              "Yogurt",
+              "Eggs"
             ];
           }
         });
@@ -346,30 +380,57 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
             SizedBox(
               height: 10,
             ),
-            Container(
-              width: double.infinity,
-              height: 500,
-              child: GridView.builder(
-                  shrinkWrap: true,
-                  // padding: EdgeInsets.all(10),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2, childAspectRatio: 1.7),
-                  itemCount: items.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Card(
-                      color: Color.fromARGB(
-                          _random.nextInt(256),
-                          _random.nextInt(256),
-                          _random.nextInt(256),
-                          _random.nextInt(256)),
-                      child: Center(
-                          child: Text(
-                        items[index],
-                        style: TextStyle(fontSize: 25),
-                      )),
-                      elevation: 5,
-                    );
-                  }),
+            Card(
+              elevation: 15,
+              child: SizedBox(
+                width: double.infinity,
+                height: 60,
+                child: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          // crossAxisAlignment: CrossAxisAlignment.start,
+                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              recomMsg,
+                              style: TextStyle(color: _textColor, fontSize: 17),
+                            ),
+                          ],
+                        )
+                      ]),
+                ),
+              ),
+            ),
+            SingleChildScrollView(
+              child: Container(
+                width: double.infinity,
+                height: 500,
+                child: GridView.builder(
+                    shrinkWrap: true,
+                    // padding: EdgeInsets.all(10),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2, childAspectRatio: 1.9),
+                    itemCount: items.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Card(
+                        color: Color.fromARGB(
+                            _random.nextInt(256),
+                            _random.nextInt(256),
+                            _random.nextInt(256),
+                            _random.nextInt(256)),
+                        child: Center(
+                            child: Text(
+                          items[index],
+                          style: TextStyle(fontSize: 25),
+                        )),
+                        elevation: 5,
+                      );
+                    }),
+              ),
             )
           ],
         ),
