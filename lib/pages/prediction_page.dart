@@ -62,12 +62,12 @@ class _PredictionPageState extends State<PredictionPage> {
         // print(jsonResponse["items"]);
         setState(() {
           color = Color.fromARGB(255, 215, 101, 93);
-          _textValue = "Good to go! No Diabetes";
+          _textValue = "Diabetes! We can take care!";
         });
       } else {
         setState(() {
           color = Color.fromARGB(255, 77, 225, 69);
-          _textValue = "Diabetes! We can take care!";
+          _textValue = "Good to go! No Diabetes";
         });
       }
     } else {
@@ -327,29 +327,11 @@ class _PredictionPageState extends State<PredictionPage> {
                                   print(_reqBody);
                                   print("starting");
                                   main(_reqBody);
-                                  if (_textValue == "Good to go! No Diabetes") {
-                                    final snackBar = SnackBar(
-                                      content: Text(
-                                        _textValue,
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                    );
-
-                                    // Find the ScaffoldMessenger in the widget tree
-                                    // and use it to show a SnackBar.
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(snackBar);
-                                  } else {
+                                  if (_textValue != "") {
                                     final snackBar = SnackBar(
                                       content: Text(_textValue,
                                           style:
                                               TextStyle(color: Colors.white)),
-                                      action: SnackBarAction(
-                                        label: 'Links',
-                                        onPressed: () {
-                                          // Some code to undo the change.
-                                        },
-                                      ),
                                     );
 
                                     // Find the ScaffoldMessenger in the widget tree
@@ -357,12 +339,13 @@ class _PredictionPageState extends State<PredictionPage> {
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(snackBar);
                                   }
-
-                                  // MedicalId["emergency_2"] = int.parse(
-                                  //     _formController.controller("ec_2").value.text);
-
-                                  // print("error");
                                 },
+
+                                // MedicalId["emergency_2"] = int.parse(
+                                //     _formController.controller("ec_2").value.text);
+
+                                // print("error");
+
                                 child: Text("Predict"),
                                 // child: Container(child: Text("Add"), color: Colors.green),
                               ),
