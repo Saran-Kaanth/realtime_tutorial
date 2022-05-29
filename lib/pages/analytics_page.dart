@@ -39,7 +39,14 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
 
   String recomMsg = "";
   Map _avgData = {};
+  var cal_diff = 0.0;
+  var glu_diff = 0.0;
   late Icon com_arrow;
+  late Icon glu_com_arrow_1;
+  late Icon glu_com_arrow_2;
+  late Icon cal_com_arrow_1;
+  late Icon cal_com_arrow_2;
+
   Color _textColor = Colors.black;
 
   List months = [
@@ -59,9 +66,14 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    // q
     super.initState();
     com_arrow = Icon(Icons.arrow_back);
+    glu_com_arrow_1 = Icon(Icons.compare_arrows_sharp);
+    glu_com_arrow_2 = Icon(Icons.compare_arrows_sharp);
+    cal_com_arrow_1 = Icon(Icons.compare_arrows_sharp);
+    cal_com_arrow_2 = Icon(Icons.compare_arrows_sharp);
+
     _ref = FirebaseDatabase.instance.ref("users");
     items = [];
 
@@ -134,13 +146,21 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
               .toStringAsFixed(2);
           carb_2 = secondData["foodData"]["total_nutrients"]["total_carbs_g"]
               .toStringAsFixed(2);
-          print(date_1);
+
           com_arrow = Icon(Icons.arrow_drop_down_sharp);
+          glu_diff = (firstData["glucoseData"] - secondData["glucoseData"])
+              .abs()
+              .ceilToDouble();
+          // print(glu_diff);
+          // print("hello");
+          cal_diff = (firstData["foodData"]["total_nutrients"]["total_cal_g"] -
+                  secondData["foodData"]["total_nutrients"]["total_cal_g"])
+              .abs()
+              .ceilToDouble();
 
           if (_avgData["avgGlucose"] > 85 && _avgData["avgGlucose"] < 120) {
             _textColor = Colors.green;
-            recomMsg =
-                "You're good to go! You can maintain your meal \nas it is!";
+
             // items = [firstData["foodData"].keys];
             List newItems = [];
             newItems = firstData["foodData"].keys.toList();
@@ -149,12 +169,85 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
               if (item != "total_nutrients") {
                 items.add(item);
               }
+
+              // print(cal_diff);
+              if (firstData["glucoseData"] > secondData["glucoseData"]) {
+                glu_com_arrow_1 = Icon(
+                  Icons.arrow_drop_up_rounded,
+                  color: Colors.green,
+                );
+                glu_com_arrow_2 = Icon(
+                  Icons.arrow_drop_down_rounded,
+                  color: Colors.red,
+                );
+                if (firstData["foodData"]["total_nutrients"]["total_cal_g"] >
+                    secondData["foodData"]["total_nutrients"]["total_cal_g"]) {
+                  recomMsg =
+                      "Glucose Increased by $glu_diff mg/dL and \nCalories increased by $cal_diff g.\nYou're good to go! you can take these foods!";
+                  cal_com_arrow_1 = Icon(
+                    Icons.arrow_drop_up_rounded,
+                    color: Colors.green,
+                  );
+                  cal_com_arrow_2 = Icon(
+                    Icons.arrow_drop_down_rounded,
+                    color: Colors.red,
+                  );
+                } else {
+                  cal_com_arrow_1 = Icon(
+                    Icons.arrow_drop_down_rounded,
+                    color: Colors.red,
+                  );
+                  cal_com_arrow_2 = Icon(
+                    Icons.arrow_drop_up_rounded,
+                    color: Colors.green,
+                  );
+                  recomMsg =
+                      "Glucose Increased by $glu_diff mg/dL and \nCalories decreased by $cal_diff g.\nYou're good to go! you can take these foods!";
+                }
+              } else {
+                print(glu_diff);
+                print(cal_diff);
+                glu_com_arrow_1 = Icon(
+                  Icons.arrow_drop_down_rounded,
+                  color: Colors.red,
+                );
+                glu_com_arrow_2 = Icon(
+                  Icons.arrow_drop_up_rounded,
+                  color: Colors.green,
+                );
+                if (firstData["foodData"]["total_nutrients"]["total_cal_g"] >
+                    secondData["foodData"]["total_nutrients"]["total_cal_g"]) {
+                  cal_com_arrow_1 = Icon(
+                    Icons.arrow_drop_up_rounded,
+                    color: Colors.green,
+                  );
+                  cal_com_arrow_2 = Icon(
+                    Icons.arrow_drop_down_rounded,
+                    color: Colors.red,
+                  );
+                  recomMsg =
+                      "Glucose decreased by $glu_diff mg/dL and \nCalories increased by $cal_diff g.\nYou're good to go! you can take these foods!";
+                } else {
+                  cal_com_arrow_1 = Icon(
+                    Icons.arrow_drop_down_rounded,
+                    color: Colors.red,
+                  );
+                  cal_com_arrow_2 = Icon(
+                    Icons.arrow_drop_up_rounded,
+                    color: Colors.green,
+                  );
+                  recomMsg =
+                      "Glucose decreased by $glu_diff mg/dL and \nCalories decreased by $cal_diff g.\nYou're good to go! you can take these foods!";
+                }
+              }
             }
-            print(recomMsg);
+            // print(recomMsg);
+            // print(firstData["foodData"]["total_nutrients"]);
           } else if (_avgData["avgGlucose"] < 85) {
             _textColor = Color.fromARGB(255, 212, 152, 1);
-            recomMsg =
-                "Try to take more amount of carbohydrates food to \nincrease your glucose level and try to add this";
+
+            // recomMsg =
+            //     "Try to take more amount of carbohydrates food to \nincrease your glucose level and try to add this";
             items = [
               "apple",
               "banana",
@@ -167,10 +260,78 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
               "sugar water",
               "raisins"
             ];
+            if (firstData["glucoseData"] > secondData["glucoseData"]) {
+              glu_com_arrow_1 = Icon(
+                Icons.arrow_drop_up_rounded,
+                color: Colors.green,
+              );
+              glu_com_arrow_2 = Icon(
+                Icons.arrow_drop_down_rounded,
+                color: Colors.red,
+              );
+              if (firstData["foodData"]["total_nutrients"]["total_cal_g"] >
+                  secondData["foodData"]["total_nutrients"]["total_cal_g"]) {
+                recomMsg =
+                    "Glucose Increased by $glu_diff mg/dL and\nCalories increased by $cal_diff g.Try to take\nmore amount of carbohydrates food to increase\nyour glucose level and try to add these foods!";
+                cal_com_arrow_1 = Icon(
+                  Icons.arrow_drop_up_rounded,
+                  color: Colors.green,
+                );
+                cal_com_arrow_2 = Icon(
+                  Icons.arrow_drop_down_rounded,
+                  color: Colors.red,
+                );
+              } else {
+                cal_com_arrow_1 = Icon(
+                  Icons.arrow_drop_down_rounded,
+                  color: Colors.red,
+                );
+                cal_com_arrow_2 = Icon(
+                  Icons.arrow_drop_up_rounded,
+                  color: Colors.green,
+                );
+                recomMsg =
+                    "Glucose Increased by $glu_diff mg/dL and\nCalories decreased by $cal_diff g.Try to take\nmore amount of carbohydrates food to increase\nyour glucose level and try to add these foods!";
+              }
+            } else {
+              print(glu_diff);
+              print(cal_diff);
+              glu_com_arrow_1 = Icon(
+                Icons.arrow_drop_down_rounded,
+                color: Colors.red,
+              );
+              glu_com_arrow_2 = Icon(
+                Icons.arrow_drop_up_rounded,
+                color: Colors.green,
+              );
+              if (firstData["foodData"]["total_nutrients"]["total_cal_g"] >
+                  secondData["foodData"]["total_nutrients"]["total_cal_g"]) {
+                cal_com_arrow_1 = Icon(
+                  Icons.arrow_drop_up_rounded,
+                  color: Colors.green,
+                );
+                cal_com_arrow_2 = Icon(
+                  Icons.arrow_drop_down_rounded,
+                  color: Colors.red,
+                );
+                recomMsg =
+                    "Glucose decreased by $glu_diff mg/dL and\nCalories increased by $cal_diff g.Try to take\nmore amount of carbohydrates food to increase\nyour glucose level and try to add these foods!";
+              } else {
+                cal_com_arrow_1 = Icon(
+                  Icons.arrow_drop_down_rounded,
+                  color: Colors.red,
+                );
+                cal_com_arrow_2 = Icon(
+                  Icons.arrow_drop_up_rounded,
+                  color: Colors.green,
+                );
+                recomMsg =
+                    "Glucose decreased by $glu_diff mg/dL and\nCalories decreased by $cal_diff g.Try to take\nmore amount of carbohydrates food to increase\nyour glucose level and try to add these foods!";
+              }
+            }
           } else if (_avgData["avgGlucose"] > 120) {
             _textColor = Color.fromARGB(255, 215, 60, 12);
-            recomMsg =
-                "I think you have to reduce your glucose level a \nlittle bit! Don't worry Try to take these foods!";
+
             items = [
               "Broccoli",
               "Broccoli Sprouts",
@@ -188,6 +349,75 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
               "Yogurt",
               "Eggs"
             ];
+            if (firstData["glucoseData"] > secondData["glucoseData"]) {
+              glu_com_arrow_1 = Icon(
+                Icons.arrow_drop_up_rounded,
+                color: Colors.green,
+              );
+              glu_com_arrow_2 = Icon(
+                Icons.arrow_drop_down_rounded,
+                color: Colors.red,
+              );
+              if (firstData["foodData"]["total_nutrients"]["total_cal_g"] >
+                  secondData["foodData"]["total_nutrients"]["total_cal_g"]) {
+                recomMsg =
+                    "Glucose Increased by $glu_diff mg/dL and\nCalories increased by $cal_diff g.\nI think you have to reduce your glucose level a\nlittle bit! Don't worry Try to add these foods!";
+                cal_com_arrow_1 = Icon(
+                  Icons.arrow_drop_up_rounded,
+                  color: Colors.green,
+                );
+                cal_com_arrow_2 = Icon(
+                  Icons.arrow_drop_down_rounded,
+                  color: Colors.red,
+                );
+              } else {
+                cal_com_arrow_1 = Icon(
+                  Icons.arrow_drop_down_rounded,
+                  color: Colors.red,
+                );
+                cal_com_arrow_2 = Icon(
+                  Icons.arrow_drop_up_rounded,
+                  color: Colors.green,
+                );
+                recomMsg =
+                    "Glucose Increased by $glu_diff mg/dL and\nCalories decreased by $cal_diff g.\nI think you have to reduce your glucose level a\nlittle bit! Don't worry Try to add these foods!";
+              }
+            } else {
+              print(glu_diff);
+              print(cal_diff);
+              glu_com_arrow_1 = Icon(
+                Icons.arrow_drop_down_rounded,
+                color: Colors.red,
+              );
+              glu_com_arrow_2 = Icon(
+                Icons.arrow_drop_up_rounded,
+                color: Colors.green,
+              );
+              if (firstData["foodData"]["total_nutrients"]["total_cal_g"] >
+                  secondData["foodData"]["total_nutrients"]["total_cal_g"]) {
+                cal_com_arrow_1 = Icon(
+                  Icons.arrow_drop_up_rounded,
+                  color: Colors.green,
+                );
+                cal_com_arrow_2 = Icon(
+                  Icons.arrow_drop_down_rounded,
+                  color: Colors.red,
+                );
+                recomMsg =
+                    "Glucose decreased by $glu_diff mg/dL and\nCalories increased by $cal_diff g.\nI think you have to reduce your glucose level a\nlittle bit! Don't worry Try to add these foods!";
+              } else {
+                cal_com_arrow_1 = Icon(
+                  Icons.arrow_drop_down_rounded,
+                  color: Colors.red,
+                );
+                cal_com_arrow_2 = Icon(
+                  Icons.arrow_drop_up_rounded,
+                  color: Colors.green,
+                );
+                recomMsg =
+                    "Glucose decreased by $glu_diff mg/dL and\nCalories decreased by $cal_diff g.\nI think you have to reduce your glucose level a\nlittle bit! Don't worry Try to add these foods!";
+              }
+            }
           }
         });
       } else {
@@ -308,15 +538,27 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
                               style:
                                   TextStyle(fontSize: 17, color: Colors.purple),
                             ),
-                            Text(
-                              "$glucose_2",
-                              style:
-                                  TextStyle(fontSize: 17, color: Colors.purple),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "$glucose_2",
+                                  style: TextStyle(
+                                      fontSize: 17, color: Colors.purple),
+                                ),
+                                glu_com_arrow_2
+                              ],
                             ),
-                            Text(
-                              "$cal_2",
-                              style:
-                                  TextStyle(fontSize: 17, color: Colors.purple),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "$cal_2",
+                                  style: TextStyle(
+                                      fontSize: 17, color: Colors.purple),
+                                ),
+                                cal_com_arrow_2
+                              ],
                             ),
                             Text(
                               "$pro_2",
@@ -351,15 +593,27 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
                               style:
                                   TextStyle(fontSize: 17, color: Colors.purple),
                             ),
-                            Text(
-                              "$glucose_1",
-                              style:
-                                  TextStyle(fontSize: 17, color: Colors.purple),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "$glucose_1",
+                                  style: TextStyle(
+                                      fontSize: 17, color: Colors.purple),
+                                ),
+                                glu_com_arrow_1
+                              ],
                             ),
-                            Text(
-                              "$cal_1",
-                              style:
-                                  TextStyle(fontSize: 17, color: Colors.purple),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "$cal_1",
+                                  style: TextStyle(
+                                      fontSize: 17, color: Colors.purple),
+                                ),
+                                cal_com_arrow_1
+                              ],
                             ),
                             Text(
                               "$pro_1",
@@ -384,19 +638,25 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
               elevation: 15,
               child: SizedBox(
                 width: double.infinity,
-                height: 60,
+                height: 100,
                 child: Padding(
                   padding: EdgeInsets.all(10),
                   child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Row(
-                          // crossAxisAlignment: CrossAxisAlignment.start,
-                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          // mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
                               recomMsg,
-                              style: TextStyle(color: _textColor, fontSize: 17),
+                              // "Glucose Increased by $glu_diff mg/dL and\nCalories increased by $cal_diff g.\nI think you have to reduce your glucose level a\nlittle bit! Don't worry Try to add these foods!",
+
+                              // "Glucose Increased by $glu_diff mg/dL and\nCalories increased by $cal_diff g.Try to take\nmore amount of carbohydrates food to increase\nyour glucose level and try to add these foods!",
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 17),
+                              textAlign: TextAlign.justify,
                             ),
                           ],
                         )
@@ -413,7 +673,7 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
                     // padding: EdgeInsets.all(10),
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2, childAspectRatio: 1.9),
+                            crossAxisCount: 2, childAspectRatio: 2.3),
                     itemCount: items.length,
                     itemBuilder: (BuildContext context, int index) {
                       return Card(
