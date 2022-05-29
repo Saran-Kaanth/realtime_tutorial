@@ -8,10 +8,6 @@ import 'package:realtime_tutorial/pages/medical_edit.dart';
 
 class MedicalIDCard extends StatefulWidget {
   const MedicalIDCard({Key? key}) : super(key: key);
-  // final String uid;
-  // ignore: use_key_in_widget_constructors
-  // const MedicalIDCard({required this.uid});
-
   @override
   State<MedicalIDCard> createState() => _MedicalIDCardState();
 }

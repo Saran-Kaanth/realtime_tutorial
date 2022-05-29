@@ -25,12 +25,6 @@ class AuthService {
     FirebaseAuth.instance.signOut();
   }
 
-// signInWithGoogle() async{
-//   FirebaseAuth _auth=FirebaseAuth.instance();
-
-//   GoogleSignInAccount googleSignInAccount=await _go
-// }
-
   final FirebaseAuth auth = FirebaseAuth.instance;
 
   Future<dynamic> signup(BuildContext context) async {
@@ -109,13 +103,9 @@ class AuthService {
 
           print("hii");
           return 0;
-          // Navigator.pushReplacement(
-          //   context, MaterialPageRoute(builder: (context) => MainPage()));
         }
         print("bye");
         return 0;
-        // Navigator.pushReplacement(
-        //     context, MaterialPageRoute(builder: (context) => MainPage()));
       }
     }
   }

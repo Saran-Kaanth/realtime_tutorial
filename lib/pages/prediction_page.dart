@@ -29,24 +29,6 @@ class _PredictionPageState extends State<PredictionPage> {
 
   // var client = http.Client();
   void main(Map _reqBody) async {
-    // var queryParameters = {
-    //   'query': query,
-    // };
-
-    // var _reqBody = {};
-    // _reqBody['pregnancies'] = "0";
-    // _reqBody['glucose'] = "0";
-    // _reqBody['bp'] = "80";
-    // _reqBody['skin_thickness'] = "23";
-    // _reqBody['insulin'] = "0";
-    // _reqBody['bmi'] = "0";
-    // _reqBody['pedi'] = "0.234";
-    // _reqBody['age'] = "23";
-    // var headers = {'x-api-key': '7VSkbFyyllYBIKwvFsEa5A==U0b9u9ct9A209r0Y'};
-
-    // var url =
-    //     Uri.https('api.calorieninjas.com', '/v1/nutrition', queryParameters);
-    // Uri.https('10.0.2.2:9600', '/prediction');
     var response = await http.post(Uri.http('10.0.2.2:9600', '/prediction'),
         headers: {"Content-Type": "application/json"},
         body: convert.jsonEncode(_reqBody));

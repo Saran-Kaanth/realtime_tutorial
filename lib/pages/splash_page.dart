@@ -30,23 +30,7 @@ class _SplashPageState extends State<SplashPage> {
         'assets/logo.png',
         width: 250,
         height: 250,
-        // color: Colors.white.withOpacity(0.8),
-        // colorBlendMode: BlendMode.src,
       ),
-
-      // child: ImageIcon(
-      //   AssetImage("assets/logo.png"),
-      //   //  color: Colors.red,
-      //   size: 24,
-      // ),
-      // child: Material(
-      //   color: Colors.blueGrey,
-      //   animationDuration: kThemeAnimationDuration,
-      //   child: Text(
-      //     "Welcome",
-      //     style: TextStyle(fontSize: 25),
-      //   ),
-      // ))),
     )));
   }
 }
