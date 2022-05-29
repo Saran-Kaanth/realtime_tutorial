@@ -25,6 +25,7 @@ class _MedicalIDCardState extends State<MedicalIDCard> {
   String _medCon = "";
   String _medication = "";
   String _bloodType = "";
+  String _rhType = "";
   // late int _em_1;
   int _em1 = 0;
   int _em2 = 0;
@@ -50,6 +51,7 @@ class _MedicalIDCardState extends State<MedicalIDCard> {
         _height = medicalData["height"];
         _weight = medicalData["weight"];
         _bloodType = medicalData["blood_type"];
+        _rhType = medicalData["rh_type"];
         _medCon = medicalData["medical_conditions"];
         _medication = medicalData["medication"];
       });
@@ -59,7 +61,7 @@ class _MedicalIDCardState extends State<MedicalIDCard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
+        // backgroundColor: Colors.white,
         appBar: AppBar(
           title: Text("Medical ID Card"),
         ),
@@ -69,7 +71,7 @@ class _MedicalIDCardState extends State<MedicalIDCard> {
           child: Card(
             elevation: 90,
             shadowColor: Colors.green[900],
-            color: Colors.black54,
+            // color: Colors.black54,
             child: SizedBox(
               width: 400,
               height: 400,
@@ -102,7 +104,7 @@ class _MedicalIDCardState extends State<MedicalIDCard> {
                               style: TextStyle(
                                 // fontSize: 30,
 
-                                color: Colors.white,
+                                // color: Colors.white,
                                 fontWeight: FontWeight.w500,
                               ), //Textstyle
                             ),
@@ -122,7 +124,7 @@ class _MedicalIDCardState extends State<MedicalIDCard> {
                               style: TextStyle(
                                 // fontSize: 30,
 
-                                color: Colors.white,
+                                // color: Colors.white,
                                 fontWeight: FontWeight.w500,
                               ), //Textstyle
                             ),
@@ -198,7 +200,7 @@ class _MedicalIDCardState extends State<MedicalIDCard> {
                               style: TextStyle(
                                 // fontSize: 30,
 
-                                color: Colors.white,
+                                // color: Colors.white,
                                 fontWeight: FontWeight.w500,
                               ), //Textstyle
                             ),
@@ -218,7 +220,7 @@ class _MedicalIDCardState extends State<MedicalIDCard> {
                               style: TextStyle(
                                 // fontSize: 30,
 
-                                color: Colors.white,
+                                // color: Colors.white,
                                 fontWeight: FontWeight.w500,
                               ), //Textstyle
                             ),
@@ -251,7 +253,7 @@ class _MedicalIDCardState extends State<MedicalIDCard> {
                               style: TextStyle(
                                 // fontSize: 30,
 
-                                color: Colors.white,
+                                // color: Colors.white,
                                 fontWeight: FontWeight.w500,
                               ), //Textstyle
                             ),
@@ -272,7 +274,7 @@ class _MedicalIDCardState extends State<MedicalIDCard> {
                               style: TextStyle(
                                 // fontSize: 30,
 
-                                color: Colors.white,
+                                // color: Colors.white,
                                 fontWeight: FontWeight.w500,
                               ), //Textstyle
                             ),
@@ -293,11 +295,11 @@ class _MedicalIDCardState extends State<MedicalIDCard> {
                               style: TextStyle(
                                 // fontSize: 30,
 
-                                color: Colors.white,
+                                // color: Colors.white,
                                 fontWeight: FontWeight.w500,
                               ), //Textstyle
                             ),
-                            Text("$_bloodType",
+                            Text("$_bloodType $_rhType",
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
                                   // fontSize: 30,
@@ -322,7 +324,7 @@ class _MedicalIDCardState extends State<MedicalIDCard> {
                               style: TextStyle(
                                 // fontSize: 30,
 
-                                color: Colors.white,
+                                // color: Colors.white,
                                 fontWeight: FontWeight.w500,
                               ), //Textstyle
                             ),
@@ -351,7 +353,7 @@ class _MedicalIDCardState extends State<MedicalIDCard> {
                               style: TextStyle(
                                 // fontSize: 30,
 
-                                color: Colors.white,
+                                // color: Colors.white,
                                 fontWeight: FontWeight.w500,
                               ), //Textstyle
                             ),

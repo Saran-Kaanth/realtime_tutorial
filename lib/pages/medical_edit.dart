@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:form_controller/form_controller.dart';
 import 'package:intl/intl.dart';
 import 'package:realtime_tutorial/pages/medical_id.dart';
+import 'package:select_form_field/select_form_field.dart';
 
 class MedicalEdit extends StatefulWidget {
   const MedicalEdit({Key? key}) : super(key: key);
@@ -23,6 +24,34 @@ class _MedicalEditState extends State<MedicalEdit> {
   DateFormat dateFormat = DateFormat("yyyy-MM-dd");
   var MedicalId = {};
   var dob;
+  String _blood = "";
+  String _rh = "";
+
+  final List<Map<String, dynamic>> _bloodTypes = [
+    {'value': 'O', 'label': 'O', 'icon': Icon(Icons.bloodtype_outlined)},
+    {
+      'value': 'A',
+      'label': 'A',
+      'icon': Icon(Icons.bloodtype_outlined),
+      // 'textStyle': TextStyle(color: Colors.red),
+    },
+    {'value': 'B', 'label': 'B', 'icon': Icon(Icons.bloodtype_outlined)},
+    {'value': 'B', 'label': 'B', 'icon': Icon(Icons.bloodtype_outlined)},
+    {
+      'value': 'None',
+      'label': 'not set',
+      // 'icon': Icon(Icons.)
+    },
+  ];
+  final List<Map<String, dynamic>> _rhTypes = [
+    {'value': '-ve', 'label': ' Negative', 'icon': Icon(Icons.linear_scale)},
+    {'value': '+ve', 'label': ' Positive', 'icon': Icon(Icons.add)},
+    {
+      'value': 'None',
+      'label': 'not set',
+      // 'icon': Icon(Icons.)
+    },
+  ];
 
   @override
   void initState() {
@@ -54,7 +83,7 @@ class _MedicalEditState extends State<MedicalEdit> {
                     controller: _formController.controller("name"),
                     validator: (value) {
                       if (value != null && value.isEmpty) {
-                        return "Enter Task";
+                        return "Enter Value";
                       }
                       return null;
                     },
@@ -93,7 +122,7 @@ class _MedicalEditState extends State<MedicalEdit> {
                     controller: _formController.controller("med_con"),
                     validator: (value) {
                       if (value != null && value.isEmpty) {
-                        return "Enter Task";
+                        return "Enter Value";
                       }
                       return null;
                     },
@@ -110,7 +139,7 @@ class _MedicalEditState extends State<MedicalEdit> {
                       controller: _formController.controller("medication"),
                       validator: (value) {
                         if (value != null && value.isEmpty) {
-                          return "Enter Task";
+                          return "Enter Value";
                         }
                         return null;
                       },
@@ -128,12 +157,12 @@ class _MedicalEditState extends State<MedicalEdit> {
                       controller: _formController.controller("height"),
                       validator: (value) {
                         if (value != null && value.isEmpty) {
-                          return "Enter Task";
+                          return "Enter Value";
                         }
                         return null;
                       },
                       decoration: const InputDecoration(
-                        labelText: "Height",
+                        labelText: "Height (cm)",
                         suffixIcon: Icon(Icons.height),
                       )),
                   SizedBox(
@@ -146,29 +175,47 @@ class _MedicalEditState extends State<MedicalEdit> {
                     controller: _formController.controller("weight"),
                     validator: (value) {
                       if (value != null && value.isEmpty) {
-                        return "Enter Task";
+                        return "Enter Value";
                       }
                       return null;
                     },
                     decoration: const InputDecoration(
-                        labelText: "Weight", suffixIcon: Icon(Icons.scale)),
+                        labelText: "Weight (kg)",
+                        suffixIcon: Icon(Icons.scale)),
                   ),
                   SizedBox(
                     height: 6,
                   )
                 ]),
                 Column(children: [
-                  TextFormField(
-                    controller: _formController.controller("blood_type"),
-                    validator: (value) {
-                      if (value != null && value.isEmpty) {
-                        return "Enter Task";
-                      }
-                      return null;
+                  SelectFormField(
+                    initialValue: 'not set',
+                    // icon: Icon(Icons.format_shapes),
+                    labelText: 'Blood Type',
+                    items: _bloodTypes,
+                    onChanged: (val) {
+                      setState(() {
+                        _blood = val;
+                      });
                     },
-                    decoration: const InputDecoration(
-                        labelText: "Blood Type",
-                        suffixIcon: Icon(Icons.bloodtype)),
+                    onSaved: (val) => print(val),
+                  ),
+                  SizedBox(
+                    height: 6,
+                  ),
+                ]),
+                Column(children: [
+                  SelectFormField(
+                    initialValue: 'not set',
+                    // icon: Icon(Icons.format_shapes),
+                    labelText: 'RH Type',
+                    items: _rhTypes,
+                    onChanged: (val) {
+                      setState(() {
+                        _rh = val;
+                      });
+                    },
+                    onSaved: (val) => print(val),
                   ),
                   SizedBox(
                     height: 6,
@@ -180,7 +227,7 @@ class _MedicalEditState extends State<MedicalEdit> {
                     controller: _formController.controller("ec_1"),
                     validator: (value) {
                       if (value != null && value.isEmpty) {
-                        return "Enter Task";
+                        return "Enter Value";
                       }
                       return null;
                     },
@@ -198,7 +245,7 @@ class _MedicalEditState extends State<MedicalEdit> {
                       controller: _formController.controller("ec_2"),
                       validator: (value) {
                         if (value != null && value.isEmpty) {
-                          return "Enter Task";
+                          return "Enter Value";
                         }
                         return null;
                       },
@@ -247,10 +294,13 @@ class _MedicalEditState extends State<MedicalEdit> {
                             _formController.controller("weight").text);
 
                         // print(MedicalId["name"]);
-                        MedicalId["blood_type"] = _formController
-                            .controller("blood_type")
-                            .text
-                            .toString();
+                        // MedicalId["blood_type"] = _formController
+                        //     .controller("blood_type")
+                        //     .text
+                        //     .toString();
+                        MedicalId["blood_type"] = _blood;
+                        MedicalId["rh_type"] = _rh;
+
                         // print(MedicalId["emergency_1"]);
                         MedicalId["emergency_1"] =
                             int.parse(_formController.controller("ec_1").text);
@@ -290,7 +340,7 @@ class _MedicalEditState extends State<MedicalEdit> {
                         _formController.controller("weight").clear();
                         _formController.controller("ec_1").clear();
                         _formController.controller("ec_2").clear();
-                        _formController.controller("blood_type").clear();
+                        // _formController.controller("blood_type").clear();
                       },
                       child: Text("Clear"),
                       // child: Container(child: Text("Add"), color: Colors.green),

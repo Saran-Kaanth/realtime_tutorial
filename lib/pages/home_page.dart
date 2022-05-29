@@ -190,18 +190,27 @@ class _HomePageState extends State<HomePage> {
           child: Column(
         children: [
           Container(
-            color: Colors.grey,
+            color: Colors.white,
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
+              // crossAxisAlignment: CrossAxisAlignment.end,
               // textBaseline: TextBaseline.alphabetic,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SizedBox(
-                  height: 60,
-                  width: 10,
-                ),
                 Text(
-                  "GluDiaSys",
-                  style: TextStyle(fontSize: 40, fontFamily: "Allison"),
+                  " Home",
+                  style: TextStyle(fontSize: 40),
+                ),
+                // SizedBox(
+                //   height: 60,
+                //   width: 10,
+                // ),
+                //
+                Image.asset(
+                  'assets/logo.png',
+                  width: 100,
+                  height: 100,
+                  // color: Colors.white.withOpacity(0.8),
+                  // colorBlendMode: BlendMode.src,
                 ),
               ],
             ),
@@ -638,8 +647,6 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-
-
 // Widget bottomTitleWidgets(double value, TitleMeta meta) {
 //     const style = TextStyle(
 //       color: Color(0xff68737d),
@@ -668,4 +675,3 @@ class _HomePageState extends State<HomePage> {
 //       child: text,
 //     );
 //   }
-

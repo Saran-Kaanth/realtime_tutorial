@@ -21,17 +21,32 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-          child: Container(
-              color: Colors.blueGrey,
-              child: Material(
-                color: Colors.blueGrey,
-                animationDuration: kThemeAnimationDuration,
-                child: Text(
-                  "Welcome",
-                  style: TextStyle(fontSize: 25),
-                ),
-              ))),
-    );
+        body: Center(
+            child: Container(
+      color: Colors.white70,
+      // color: Colors.blueGrey,
+
+      child: Image.asset(
+        'assets/logo.png',
+        width: 250,
+        height: 250,
+        // color: Colors.white.withOpacity(0.8),
+        // colorBlendMode: BlendMode.src,
+      ),
+
+      // child: ImageIcon(
+      //   AssetImage("assets/logo.png"),
+      //   //  color: Colors.red,
+      //   size: 24,
+      // ),
+      // child: Material(
+      //   color: Colors.blueGrey,
+      //   animationDuration: kThemeAnimationDuration,
+      //   child: Text(
+      //     "Welcome",
+      //     style: TextStyle(fontSize: 25),
+      //   ),
+      // ))),
+    )));
   }
 }

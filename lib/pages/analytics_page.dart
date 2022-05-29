@@ -438,7 +438,7 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
       Row(
         children: [
           Text(
-            " Analytics Page",
+            " Recommendation",
             style: TextStyle(fontSize: 40),
           ),
         ],

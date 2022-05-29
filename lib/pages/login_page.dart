@@ -100,12 +100,19 @@ class _LoginPageState extends State<LoginPage> {
                     EdgeInsets.only(top: 200, bottom: 200, left: 30, right: 30),
                 elevation: 20,
                 child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "GluDiaSys",
+                        "Login",
                         style: TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.bold),
+                            fontSize: 30, fontWeight: FontWeight.bold),
+                      ),
+                      Image.asset(
+                        'assets/logo.png',
+                        width: 250,
+                        height: 250,
+                        // color: Colors.white.withOpacity(0.8),
+                        // colorBlendMode: BlendMode.src,
                       ),
                       Padding(
                           padding: const EdgeInsets.only(left: 20, right: 20),
@@ -120,8 +127,7 @@ class _LoginPageState extends State<LoginPage> {
                                   width: 30.0,
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
-                                        image: AssetImage(
-                                            'assets/images/googleimage.png'),
+                                        image: AssetImage('assets/google.png'),
                                         fit: BoxFit.cover),
                                     shape: BoxShape.circle,
                                   ),

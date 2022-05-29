@@ -89,7 +89,7 @@ class _PredictionPageState extends State<PredictionPage> {
                   child: Column(
                 children: [
                   Container(
-                    color: Colors.grey,
+                    // color: Colors.grey,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       // textBaseline: TextBaseline.alphabetic,
@@ -99,7 +99,7 @@ class _PredictionPageState extends State<PredictionPage> {
                           width: 10,
                         ),
                         Text(
-                          "Prediction Page",
+                          "Prediction",
                           style: TextStyle(fontSize: 40, fontFamily: "Allison"),
                         ),
                       ],

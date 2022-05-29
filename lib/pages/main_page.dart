@@ -68,7 +68,7 @@ class _MainPageState extends State<MainPage> {
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(
-              icon: Icon(Icons.analytics), label: "Analytics"),
+              icon: Icon(Icons.analytics), label: "Recommendation"),
           BottomNavigationBarItem(
               icon: Icon(Icons.lens_blur_sharp), label: "Prediction"),
           BottomNavigationBarItem(

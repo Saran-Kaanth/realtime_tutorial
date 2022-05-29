@@ -26,21 +26,21 @@ class _ProfilePageState extends State<ProfilePage> {
             body: SingleChildScrollView(
                 child: Column(children: [
       Container(
-          color: Colors.grey,
+          // color: Colors.grey,
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              SizedBox(
-                width: 10,
-                height: 60,
-              ),
-              Text(
-                "Profile Page",
-                style: TextStyle(fontSize: 40),
-              ),
-            ],
-          )),
+        crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 10,
+            height: 60,
+          ),
+          Text(
+            "Profile",
+            style: TextStyle(fontSize: 40),
+          ),
+        ],
+      )),
       Padding(
         padding: EdgeInsets.fromLTRB(5, 10, 5, 20),
         child: Center(
