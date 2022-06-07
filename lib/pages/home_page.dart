@@ -1,6 +1,4 @@
 import 'dart:collection';
-import 'dart:ffi';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -95,8 +93,10 @@ class _HomePageState extends State<HomePage> {
         .once()
         .then((value) {
       print("calories");
+      print(value.snapshot.value);
       Map all_data = value.snapshot.value as Map;
-      print(all_data);
+      // var all_data = value.snapshot.value;
+      print(value.snapshot.value);
       List fullDataList = [];
       setState(() {
         print(all_data.keys);
@@ -267,6 +267,7 @@ class _HomePageState extends State<HomePage> {
                             .child("all_data")
                             .child(months[(DateTime.now().month) - 1])
                             .child((DateTime.now().day).toString())
+                            // .child("31")
                             .child("glucoseData")
                             // .child(dateFormat_2.format(DateTime.now()))
                             .set(_glucose)

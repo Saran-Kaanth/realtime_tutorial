@@ -23,8 +23,8 @@ class _SplashPageState extends State<SplashPage> {
     return Scaffold(
         body: Center(
             child: Container(
-      color: Colors.white70,
       // color: Colors.blueGrey,
+      color: Color.fromARGB(255, 255, 255, 255),
 
       child: Image.asset(
         'assets/logo.png',

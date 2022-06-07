@@ -1,5 +1,4 @@
-import 'dart:developer';
-
+// import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -139,7 +138,8 @@ class _MyFormState extends State<MyForm> {
         .child(_instance.currentUser!.uid)
         .child("all_data")
         .child(months[(DateTime.now().month) - 1])
-        .child((DateTime.now().day).toString())
+        .child((DateTime.now().day - 2).toString())
+        // .child("31")
         .child("date")
         .set(dateFormat_1.format(DateTime.now()))
         .then((value) => print("date added"));
@@ -147,7 +147,8 @@ class _MyFormState extends State<MyForm> {
         .child(_instance.currentUser!.uid)
         .child("all_data")
         .child(months[(DateTime.now().month) - 1])
-        .child((DateTime.now().day).toString())
+        .child((DateTime.now().day - 2).toString())
+        // .child("31")
         .child("foodData")
         // .child(dateFormat_2.format(DateTime.now()))
         .set(foodNutrData)

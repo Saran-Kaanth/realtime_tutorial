@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:realtime_tutorial/pages/analytics_page.dart';
 import 'package:realtime_tutorial/pages/food_page.dart';
+import 'package:realtime_tutorial/pages/glucose_page.dart';
 import 'package:realtime_tutorial/pages/home_page.dart';
 import 'package:realtime_tutorial/pages/prediction_page.dart';
 import 'package:realtime_tutorial/pages/profile_page.dart';
@@ -17,10 +18,12 @@ class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
 
   List<Widget> _widgetOptions = [
+    // SamplePage(),
     HomePage(),
+    // GlucosePage(),
     // AnalyticsPage(),
     AnalyticsPage(),
-    // SamplePage(),
+
     PredictionPage(),
     ProfilePage()
   ];
